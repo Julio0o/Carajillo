@@ -1,0 +1,23 @@
+import psycopg2
+
+conexion = psycopg2.connect(
+    host="localhost",
+    port="5432",
+    user="juliogtz",
+    password="1234",
+    dbname="lua_tiendita"
+)
+
+print("✅ Conexión exitosa a PostgreSQL")
+cursor = conexion.cursor()
+cursor.execute("""
+    SELECT table_name 
+    FROM information_schema.tables 
+    WHERE table_schema = 'public';
+""")
+
+print("📋 Tablas disponibles:")
+for tabla in cursor.fetchall():
+    print(" -", tabla[0])
+
+conexion.close()
